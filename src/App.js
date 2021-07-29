@@ -54,14 +54,18 @@ export function SortableArray(props) {
     >
       <El.Flex gap="2x" flow="row">
         {React.Children.toArray(
-          props.items.map((eachItem, index) => {
-            // console.log("start");
-            return (
-              <SortableItem id={eachItem} row={props.row} column={index}>
-                {eachItem}
-              </SortableItem>
-            );
-          })
+          props.items && props.items.length > 0 ? (
+            props.items.map((eachItem, index) => {
+              // console.log("start");
+              return (
+                <SortableItem id={eachItem} row={props.row} column={index}>
+                  {eachItem}
+                </SortableItem>
+              );
+            })
+          ) : (
+            <El.Card>Umer</El.Card>
+          )
         )}
       </El.Flex>
     </SortableContext>
@@ -73,9 +77,9 @@ export default function App() {
 
   function handleDragEnd(event) {
     const { active, over } = event;
-    const activeData = active.data.current;
-    const overData = over.data.current;
-    if (active.id !== over.id && activeData && overData) {
+    const activeData = active?.data?.current;
+    const overData = over?.data?.current;
+    if (active && over && active.id !== over.id && activeData && overData) {
       // console.log("activeData", activeData);
       // console.log("overData", overData);
       setItems((items) => {
@@ -93,7 +97,7 @@ export default function App() {
         items[activeData.row] = from;
         items[overData.row] = to;
         console.log(items);
-        return items;
+        return arrayMove(items, overData.row, overData.row);
       });
     }
   }
