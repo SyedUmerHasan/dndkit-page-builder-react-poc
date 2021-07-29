@@ -28,8 +28,7 @@ function SortableItem(props) {
     id: props.id,
     data: {
       row: props.row,
-      column: props.column,
-      test: 1
+      column: props.column
     }
   });
 
